@@ -52,6 +52,7 @@ void BooBox::run()
   connect(server, &QTcpServer::newConnection, this, &BooBox::handleConnection);
   server->listen(QHostAddress(QHostAddress::Any), settings.listenPort);
   QEventLoop loop;
+  printf("BooBox server v" VERSION " running!\n");
   loop.exec();
   emit finished();
 }
@@ -68,21 +69,22 @@ void BooBox::handleConnection()
 void BooBox::readData()
 {
   incomingData = connection->readAll();
-  printf("Data:\n'%s'\n", incomingData.data());
   if(incomingData.right(1) == "\n") {
-    printf("Command:\n%s\n", incomingData.data());
+    printf("Command: '%s'\n", incomingData.trimmed().data());
   } else {
     return;
   }
   bytesWritten = 0;
   QDir dataDir(settings.dataPath, "*.wav", QDir::Name, QDir::Files);
   QList<QFileInfo> fileInfos = dataDir.entryInfoList();
-  QFile wavFile(QFileInfo(fileInfos.at(QRandomGenerator::global()->bounded(fileInfos.count()))).absoluteFilePath());
+  QString fileName = QFileInfo(fileInfos.at(QRandomGenerator::global()->bounded(fileInfos.count()))).absoluteFilePath();
+  QFile wavFile(fileName);
   if(wavFile.open(QIODevice::ReadOnly)) {
     QByteArray outgoingData = wavFile.readAll();
     outgoingData.remove(0, outgoingData.indexOf("data") + 8); // Also remove data size of 4 bytes
     wavFile.close();
     outgoingSize = outgoingData.size();
+    printf("Sending: '%s'\n", qPrintable(fileName));
     connection->write(outgoingData);
   }
 }
@@ -93,7 +95,7 @@ void BooBox::dataWritten(qint64 bytes)
   printf("Writing %llu bytes of data\n", bytes);
   bytesWritten += bytes;
   if(bytesWritten == outgoingSize) {
-    printf("Done writing, closing connection...\n");
+    printf("Done writing, closing connection...\n\n");
     connection->close();
     connection->deleteLater();
   }
