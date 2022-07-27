@@ -27,6 +27,9 @@
 #include "boobox.h"
 
 #include <QTcpSocket>
+#include <QRandomGenerator>
+#include <QFileInfo>
+#include <QDir>
 #include <QFile>
 
 BooBox::BooBox(const QCommandLineParser &parser)
@@ -68,9 +71,13 @@ void BooBox::readData()
   printf("Data:\n'%s'\n", incomingData.data());
   if(incomingData.right(1) == "\n") {
     printf("Command:\n%s\n", incomingData.data());
+  } else {
+    return;
   }
   bytesWritten = 0;
-  QFile wavFile(settings.dataPath + "/hello.wav");
+  QDir dataDir(settings.dataPath, "*.wav", QDir::Name, QDir::Files);
+  QList<QFileInfo> fileInfos = dataDir.entryInfoList();
+  QFile wavFile(QFileInfo(fileInfos.at(QRandomGenerator::global()->bounded(fileInfos.count()))).absoluteFilePath());
   if(wavFile.open(QIODevice::ReadOnly)) {
     QByteArray outgoingData = wavFile.readAll();
     outgoingData.remove(0, outgoingData.indexOf("data") + 8); // Also remove data size of 4 bytes
@@ -83,8 +90,10 @@ void BooBox::readData()
 
 void BooBox::dataWritten(qint64 bytes)
 {
+  printf("Writing %llu bytes of data\n", bytes);
   bytesWritten += bytes;
   if(bytesWritten == outgoingSize) {
+    printf("Done writing, closing connection...\n");
     connection->close();
     connection->deleteLater();
   }
