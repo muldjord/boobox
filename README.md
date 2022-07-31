@@ -21,6 +21,9 @@ Here's an example of a BooBox I made looking like the fiendlishly funny "Murray 
 
 DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project currently. It works just fine, but it uses PWM audio, which has quite a low quality due to it's sawtooth based origins. I am looking into changing this part to a MAX98357A class C amplifier using i2s. This is in the mail, so stay tuned for that change to happen "soon'ish".
 
+#### Electronic schematics
+These don't exist yet! I have never done schematics for electronics, so I need to figure out how to do this properly before I can make them. I plan to, and they will be added here when they are ready.
+
 ### Software
 * The official Pico SDK configured and working (https://github.com/raspberrypi/pico-sdk)
   * Quite easy to get working on a standard Ubuntu machine. Just follow their readme.
