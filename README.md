@@ -22,14 +22,7 @@ Here's an example of a BooBox I made looking like the fiendlishly funny "Murray 
 DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project currently. I want to change the current PWM audio based signal (which has quite a low quality due to it's sawtooth based origins) to an i2s based digital signal. I am looking into changing this part to a MAX98357A class C amplifier using i2s. This is in the mail, so stay tuned for that change to happen "soon'ish". The LM386 work well for analog audio amplification, but the PWM signal output is not optimal.
 
 #### Electronic schematics
-These don't exist yet! I have never done schematics for electronics, so I need to figure out how to do this properly before I can make them. I plan to, and they will be added here when they are ready.
-
-A quick and dirty "schematic" is something like this:
-* The PIR sensor is connected to VBUS, GND and GP15
-* The servo is connected to VBUS, GND and GP16
-* PWM audio signal output is at GP28. It is VERY low without an amplifier though
-  * My LM386 amplifier is thefore connected to GP28, VBUS and GND
-  * My speaker is connected to the LM386 circuitry
+![Connection schematic](schematics/connections_schematic.png)
 
 ### Software
 * The official Pico SDK configured and working (https://github.com/raspberrypi/pico-sdk)
