@@ -29,7 +29,9 @@ DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project 
 * The code from this repository
 
 ### 3D models / components
-The 3D models and components needed to make your own BooBox, will be uploaded to printables.com soon. Keep an eye out at: https://www.printables.com/social/170442-muldjord/models
+All required 3D models are available in the [3D models](3d_models) subdirectory.
+
+They will also be uploaded to (printables.com) soon. Keep an eye out at: https://www.printables.com/social/170442-muldjord/models
 
 ## Building and running
 ### Server daemon
