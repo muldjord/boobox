@@ -19,7 +19,7 @@ Here's an example of a BooBox I made looking like the fiendlishly funny "Murray 
 * LM386 amplifier IC
 * Custom print board for LM386 IC and required components for an [amplifier with 200 gain](https://www.ti.com/lit/ds/symlink/lm386.pdf)
 
-DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project currently. It works just fine, but it uses PWM audio, which has quite a low quality due to it's sawtooth based origins. I am looking into changing this part to a MAX98357A class C amplifier using i2s. This is in the mail, so stay tuned for that change to happen "soon'ish".
+DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project currently. I want to change the current PWM audio based signal (which has quite a low quality due to it's sawtooth based origins) to an i2s based digital signal. I am looking into changing this part to a MAX98357A class C amplifier using i2s. This is in the mail, so stay tuned for that change to happen "soon'ish".
 
 #### Electronic schematics
 These don't exist yet! I have never done schematics for electronics, so I need to figure out how to do this properly before I can make them. I plan to, and they will be added here when they are ready.
