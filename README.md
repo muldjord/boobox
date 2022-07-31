@@ -31,7 +31,7 @@ DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project 
 ### 3D models / components
 All required 3D models are available in the [3D models](3d_models) subdirectory.
 
-They will also be uploaded to [Printables.com](www.printables.com) soon. Keep an eye out at: https://www.printables.com/social/170442-muldjord/models
+They will also be uploaded to my [Printables.com](https://www.printables.com/social/170442-muldjord/models) page soon. Keep an eye out that!
 
 ## Building and running
 ### Server daemon
