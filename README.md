@@ -23,9 +23,9 @@ DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project 
 
 ### Software
 * The official Pico SDK configured and working (https://github.com/raspberrypi/pico-sdk)
- * Quite easy to get working on a standard Ubuntu machine. Just follow their readme.
+* * Quite easy to get working on a standard Ubuntu machine. Just follow their readme.
 * The Qt5 open source SDK
- * On Ubuntu simply run: 'sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools'
+* * On Ubuntu simply run: 'sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools'
 * The code from this repository
 
 ### 3D models / components
