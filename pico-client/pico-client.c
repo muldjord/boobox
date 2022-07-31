@@ -1,3 +1,14 @@
+/* 
+   PWM audio code originally sourced from (this will be refactored to use i2s soon though,
+   but I want to give credit where credit is due while the code is still in use of course):
+   rgrosset, PWM audio example repository:
+   https://github.com/rgrosset/pico-pwm-audio (MIT license: https://github.com/rgrosset/pico-pwm-audio/blob/main/LICENSE)
+
+   Servo C and PIO code and TCP client C code from official Pico SDK examples:
+   https://github.com/raspberrypi/pico-examples (BSD 3-clause license:
+   https://github.com/raspberrypi/pico-examples/blob/master/LICENSE.TXT)
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -15,7 +26,7 @@
 #include "servo.pio.h"
 
 #define TCP_PORT 4242
-#define BUF_SIZE 64000 // 64 kb max
+#define BUF_SIZE 64000
 
 typedef struct TCP_CLIENT_T_ {
   struct tcp_pcb *tcp_pcb;
@@ -162,10 +173,10 @@ void pwm_interrupt_handler() {
     // allow the pwm value to repeat for 8 cycles this is >>3
     if(wav_position % 8 == 0) {
       int sample_value = 0;
-      if(tcpconn->buffer[wav_position>>3] < 127) { // Inverse samples pointing 'downwards' (below 127)
-	sample_value = (127 - tcpconn->buffer[wav_position>>3]) + 127;
+      if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + 800 >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):800)] < 127) { // Inverse samples pointing 'downwards' (below 127)
+	sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + 800 >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):800)]) + 127;
       } else {
-	sample_value = tcpconn->buffer[wav_position>>3];
+	sample_value = tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + 800 >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):800)];
       }
       sample_value -= 127;
       if(sample_value > high_value) {
