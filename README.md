@@ -6,6 +6,7 @@ Whenever the motion detector triggers The Pico fetches a sound from the provided
 DISCLAIMER! I plan on making a much more thorough explanation on how to built your own BooBox when I get the time. For now, what follows is a quick and dirty walkthrough that should provide all necessary information although in a pretty basic and non-visual way.
 
 Here's an example of a BooBox I made looking like the fiendlishly funny "Murray the Demonic Talking Skull" from the Monkey Island games:
+
 [![](https://img.youtube.com/vi/7ivf-3M5PTc/0.jpg)](https://www.youtube.com/watch?v=7ivf-3M5PTc)
 
 ## What you need
