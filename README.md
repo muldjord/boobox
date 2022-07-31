@@ -3,7 +3,7 @@ A fun Raspberry Pi Pico W project that combines a few pieces of hardware to crea
 
 Whenever the motion detector triggers The Pico fetches a sound from the provided TCP server and plays it through the speaker. The servo motor matches the sound data to allowing for a skull or other animatronic to open and close its mouth while the sound plays.
 
-DISCLAIMER! I plan on making a much more thorough explanation on how to built your own Murray when I get the time. For now, what follows is a quick and dirty walkthrough that should provide all necessary information although in a pretty basic and non-visual way.
+DISCLAIMER! I plan on making a much more thorough explanation on how to built your own BooBox when I get the time. For now, what follows is a quick and dirty walkthrough that should provide all necessary information although in a pretty basic and non-visual way.
 
 ## What you need
 
@@ -25,7 +25,7 @@ DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project 
 * The code from this repository
 
 ### 3D models / components
-The 3D models and components needed to make your own Murray, will be uploaded to printables.com soon. Keep an eye out at: https://www.printables.com/social/170442-muldjord/models
+The 3D models and components needed to make your own BooBox, will be uploaded to printables.com soon. Keep an eye out at: https://www.printables.com/social/170442-muldjord/models
 
 ## Building and running
 ### Server daemon
