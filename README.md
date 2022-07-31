@@ -63,7 +63,7 @@ $ cd build
 $ cmake .. -DPICO_BOARD=pico_w -DWIFI_SSID="YOUR_WIFI_SSID" -DWIFI_PASSWORD="YOUR_WIFI_PASSWORD" -DTCP_SERVER_IP="IP_OF_PC_WHERE_SERVER_IS_RUNNING" ..
 $ make
 ```
-* hold down the 'reprogram' button on the pico and connect the USB cable to the PC, then let go of the button to put the Pico into mass storage mode.
+* Hold down the 'reprogram' button on the pico and connect the USB cable to the PC, then let go of the button to put the Pico into mass storage mode.
 * Drag-n-drop the `pico-client.uf2` file onto the Pico mass storage device.
 
 If the server is running, everything is hooked up correctly and you've entered your wifi information and IP, it should now work.
