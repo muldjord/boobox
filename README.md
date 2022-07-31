@@ -5,7 +5,7 @@ Whenever the motion detector triggers The Pico fetches a sound from the provided
 
 DISCLAIMER! I plan on making a much more thorough explanation on how to built your own BooBox when I get the time. For now, what follows is a quick and dirty walkthrough that should provide all necessary information although in a pretty basic and non-visual way.
 
-[](https://youtu.be/7ivf-3M5PTc)
+[![](https://youtu.be/7ivf-3M5PTc)]
 
 ## What you need
 
