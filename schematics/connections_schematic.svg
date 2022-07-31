@@ -9,7 +9,7 @@
    id="svg5"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    sodipodi:docname="connections_schematic.svg"
-   inkscape:export-filename="/home/muldjord/programming/boobox/pico-client/connections_schematic.png"
+   inkscape:export-filename="/home/muldjord/programming/boobox/schematics/connections_schematic.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -22,7 +22,7 @@
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:pageshadow="2"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="1"
      inkscape:pagecheckerboard="0"
      inkscape:document-units="mm"
      showgrid="true"
@@ -273,9 +273,9 @@
        y="0"><tspan
          x="423.16853"
          y="284.43753"
-         id="tspan154972"><tspan
+         id="tspan1486"><tspan
            style="text-align:end;text-anchor:end"
-           id="tspan154970">VBUS</tspan></tspan></text>
+           id="tspan1484">VBUS</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,1.2582439,-17.925278)"
@@ -285,9 +285,9 @@
        y="0"><tspan
          x="427.90292"
          y="284.43753"
-         id="tspan154976"><tspan
+         id="tspan1490"><tspan
            style="text-align:end;text-anchor:end"
-           id="tspan154974">GND</tspan></tspan></text>
+           id="tspan1488">GND</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,1.2582439,-2.050278)"
@@ -297,9 +297,9 @@
        y="0"><tspan
          x="424.09041"
          y="284.43753"
-         id="tspan154980"><tspan
+         id="tspan1494"><tspan
            style="text-align:end;text-anchor:end"
-           id="tspan154978">GP28</tspan></tspan></text>
+           id="tspan1492">GP28</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,-1.7067661,13.824722)"
@@ -309,7 +309,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan154982">GP15</tspan></text>
+         id="tspan1496">GP15</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.657819,9.8559628)"
@@ -319,7 +319,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan154984">+5V</tspan></text>
+         id="tspan1498">+5V</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.509942,13.778594)"
@@ -329,7 +329,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan154986">PWM</tspan></text>
+         id="tspan1500">PWM</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.657819,17.793462)"
@@ -339,7 +339,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan154988">GND</tspan></text>
+         id="tspan1502">GND</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,1.3423299,13.824722)"
@@ -351,9 +351,9 @@
        inkscape:transform-center-y="-0.57266011"><tspan
          x="424.09041"
          y="284.43753"
-         id="tspan154992"><tspan
+         id="tspan1506"><tspan
            style="text-align:end;text-anchor:end"
-           id="tspan154990">GP16</tspan></tspan></text>
+           id="tspan1504">GP16</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="scale(0.26458333)"
@@ -366,7 +366,7 @@
        style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="376.51565"
-         id="tspan154994">Pi Pico W</tspan></text>
+         id="tspan1508">Pi Pico W</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0,0.27550514,-0.27471787,0,259.61235,3.610119)"
@@ -374,7 +374,7 @@
        style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="376.51565"
-         id="tspan154996">Servo</tspan></text>
+         id="tspan1510">Servo</tspan></text>
     <rect
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.994421"
        id="rect848-0-7"
@@ -429,7 +429,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan154998">+5V</tspan></text>
+         id="tspan1512">+5V</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.509943,33.622333)"
@@ -439,7 +439,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan155000">TRIG</tspan></text>
+         id="tspan1514">TRIG</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.65782,37.637201)"
@@ -449,7 +449,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan155002">GND</tspan></text>
+         id="tspan1516">GND</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0,0.27550514,-0.27471787,0,259.61234,23.453857)"
@@ -457,7 +457,7 @@
        style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="376.51565"
-         id="tspan155004">PIR</tspan></text>
+         id="tspan1518">PIR</tspan></text>
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-62-3-0"
@@ -509,7 +509,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan155006">+5V</tspan></text>
+         id="tspan1520">+5V</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.509945,-21.94013)"
@@ -519,7 +519,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan155008">PWM</tspan></text>
+         id="tspan1522">PWM</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.657822,-17.925262)"
@@ -529,7 +529,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan155010">GND</tspan></text>
+         id="tspan1524">GND</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0,0.27550514,-0.27471787,0,259.61234,-32.108606)"
@@ -537,7 +537,7 @@
        style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9-4);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="376.51565"
-         id="tspan155012">LM386 Amp</tspan></text>
+         id="tspan1526">LM386 Amp</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0,0.27550514,-0.27471787,0,249.59844,-18.533435)"
@@ -545,7 +545,7 @@
        style="font-style:normal;font-weight:normal;font-size:10.2585px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9-4-6);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="369.07637"
-         id="tspan155014">Gain = 200</tspan></text>
+         id="tspan1528">Gain = 200</tspan></text>
     <path
        style="fill:none;stroke:#06ff0d;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 107.15625,105.83333 v 19.84375 h 37.04166"
