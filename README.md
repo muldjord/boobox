@@ -27,8 +27,9 @@ These don't exist yet! I have never done schematics for electronics, so I need t
 A quick and dirty "schematic" is something like this:
 * The PIR sensor is connected to VBUS, GND and GP15
 * The servo is connected to VBUS, GND and GP16
-* PWM audio signal output is at GP28. It is VERY low without an amplifier though.
-  * My LM386 amplifier is thefore connected to GP28, VBUS and GND.
+* PWM audio signal output is at GP28. It is VERY low without an amplifier though
+  * My LM386 amplifier is thefore connected to GP28, VBUS and GND
+  * My speaker is connected to the LM386 circuitry
 
 ### Software
 * The official Pico SDK configured and working (https://github.com/raspberrypi/pico-sdk)
