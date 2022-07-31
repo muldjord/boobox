@@ -24,6 +24,11 @@ DISCLAIMER! The LM386 amplifier is the one thing I don't like about the project 
 #### Electronic schematics
 These don't exist yet! I have never done schematics for electronics, so I need to figure out how to do this properly before I can make them. I plan to, and they will be added here when they are ready.
 
+A quick and dirty "schematic" is something like this:
+* The PIR sensor is connected to VBUS, GND and GP15
+* The servo is connected to VBUS, GND and GP16
+* PWM audio signal output is at GP28. It is VERY low without an amplifier though.
+
 ### Software
 * The official Pico SDK configured and working (https://github.com/raspberrypi/pico-sdk)
   * Quite easy to get working on a standard Ubuntu machine. Just follow their readme.
