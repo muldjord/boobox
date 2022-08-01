@@ -274,9 +274,6 @@ int main(void) {
 	state = 0;
       }
     }
-    // FIXME: Due to this sleep the mouth movement is always behind the sound. Find way to sample ahead 100 ms for the servo
-    // I could add 100 ms samples to the beginning of the sample data. Then always calculate servo value from + 100 ms samples ahead
-    // while the sound still plays from wav_position>>3
     if(wav_playing) {
       int sample_value = 0;
       int high_value = 0;
