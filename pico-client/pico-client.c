@@ -279,11 +279,11 @@ int main(void) {
       int high_value = 0;
       int low_value = 255;
       // Read ahead 'read_ahead' samples for servo movement but do it at steps of 8 as we don't need to look at every sample
-      for(int samples = 0; samples < read_ahead; samples += 8) {
-	if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples + read_ahead >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples + read_ahead)] < 127) { // Inverse samples pointing 'downwards' (below 127)
-	  sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples + read_ahead >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples + read_ahead)]) + 127;
+      for(int samples = read_ahead; samples < read_ahead * 2; samples += 8) {
+	if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)] < 127) { // Inverse samples pointing 'downwards' (below 127)
+	  sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)]) + 127;
 	} else {
-	  sample_value = tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples + read_ahead >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples + read_ahead)];
+	  sample_value = tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)];
 	}
 	sample_value -= 127;
 	if(sample_value > high_value) {
