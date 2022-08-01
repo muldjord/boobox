@@ -10,10 +10,8 @@
 */
 
 #include <stdio.h>
-#include <string.h>
-#include <time.h>
+
 #include "pico/stdlib.h"
-#include "pico/time.h"
 #include "pico/cyw43_arch.h"
 #include "lwip/pbuf.h"
 #include "lwip/tcp.h"
@@ -23,10 +21,32 @@
 #include "hardware/clocks.h"
 #include "hardware/pio.h"
 #include "hardware/gpio.h"
+
 #include "servo.pio.h"
 
-#define TCP_PORT 4242
-#define BUF_SIZE 64000
+// Motion sensor related
+const int pir_pin = 15; // GP15
+
+// Servo related
+const int servo_pin = 16; // GP16
+const PIO pio = pio0;
+const int state_machine = 0;
+const int mouth_open = 1666; // Currently unused
+const int mouth_closed = 2000;
+
+// Audio related
+const int audio_pin = 28; // GP28
+const float audio_volume = 0.5; // 0.1 - 1.0
+const int span = 20;
+int count = 0;
+int high_value = 0;
+int low_value = 255;
+bool wav_playing = false;
+int wav_position = 0;
+int servo_value = mouth_closed;
+
+// TCP socket related
+#define BUF_SIZE 128000
 
 typedef struct TCP_CLIENT_T_ {
   struct tcp_pcb *tcp_pcb;
@@ -35,6 +55,8 @@ typedef struct TCP_CLIENT_T_ {
   int buffer_len;
   bool complete;
 } TCP_CLIENT_T;
+
+TCP_CLIENT_T *tcpconn = NULL;
 
 static err_t tcp_client_close(void *arg) {
   TCP_CLIENT_T *tcpconn = (TCP_CLIENT_T*)arg;
@@ -119,7 +141,7 @@ static bool tcp_client_open(void *arg) {
   memset(tcpconn->buffer, 0, sizeof(tcpconn->buffer));
 
   cyw43_arch_lwip_begin();
-  err_t err = tcp_connect(tcpconn->tcp_pcb, &tcpconn->remote_addr, TCP_PORT, tcp_client_connected);
+  err_t err = tcp_connect(tcpconn->tcp_pcb, &tcpconn->remote_addr, atoi(TCP_SERVER_PORT), tcp_client_connected);
   cyw43_arch_lwip_end();
 
   return err == ERR_OK;
@@ -134,41 +156,21 @@ static TCP_CLIENT_T* tcp_client_init(void) {
   return tcpconn;
 }
 
-TCP_CLIENT_T *tcpconn = NULL;
-#define AUDIO_PIN 28 // GP28, Physical pin 34
-PIO pio = pio0;
-int sm = 0;
-int rand_line = 0;
-
-const uint PIR_PIN = 15;
-const uint SERVO_PIN = 16;
-
-/* Write `period` to the input shift register */
-void pio_pwm_set_period(PIO pio, uint sm, uint32_t period) {
-  pio_sm_set_enabled(pio, sm, false);
-  pio_sm_put_blocking(pio, sm, period);
-  pio_sm_exec(pio, sm, pio_encode_pull(false, false));
-  pio_sm_exec(pio, sm, pio_encode_out(pio_isr, 32));
-  pio_sm_set_enabled(pio, sm, true);
+// PWM audio related
+void pio_pwm_set_period(PIO pio, uint state_machine, uint32_t period) {
+  pio_sm_set_enabled(pio, state_machine, false);
+  pio_sm_put_blocking(pio, state_machine, period);
+  pio_sm_exec(pio, state_machine, pio_encode_pull(false, false));
+  pio_sm_exec(pio, state_machine, pio_encode_out(pio_isr, 32));
+  pio_sm_set_enabled(pio, state_machine, true);
 }
 
-/* Write `level` to TX FIFO. Tcpconn machine will copy this into X */
-void pio_pwm_set_level(PIO pio, uint sm, uint32_t level) {
-  pio_sm_put_blocking(pio, sm, level);
+void pio_pwm_set_level(PIO pio, uint state_machine, uint32_t level) {
+  pio_sm_put_blocking(pio, state_machine, level);
 }
-
-#define MOUTH_OPEN 1666
-#define MOUTH_CLOSED 2000
-int count = 0;
-int span = 20;
-int high_value = 0;
-int low_value = 255;
-bool wav_playing = false;
-int wav_position = 0;
-int servo_value = MOUTH_CLOSED;
 
 void pwm_interrupt_handler() {
-  pwm_clear_irq(pwm_gpio_to_slice_num(AUDIO_PIN));
+  pwm_clear_irq(pwm_gpio_to_slice_num(audio_pin));
   if(wav_position < (tcpconn->buffer_len<<3)) {
     // allow the pwm value to repeat for 8 cycles this is >>3
     if(wav_position % 8 == 0) {
@@ -193,27 +195,25 @@ void pwm_interrupt_handler() {
 	low_value = 255;
       }
     }
-    pwm_set_gpio_level(AUDIO_PIN, tcpconn->buffer[wav_position>>3]);
+    pwm_set_gpio_level(audio_pin, tcpconn->buffer[wav_position>>3] * (audio_volume <= 0.0 || audio_volume >= 1.0 ?0.5:audio_volume));
     wav_position++;
   } else {
     // reset to start
     wav_position = 0;
-    servo_value = MOUTH_CLOSED;
+    servo_value = mouth_closed;
     wav_playing = false;
-    pio_pwm_set_level(pio, sm, servo_value);
+    pio_pwm_set_level(pio, state_machine, servo_value);
     irq_set_enabled(PWM_IRQ_WRAP, false);
   }
 }
 
+// Main
 int main(void) {
-  /* Overclocking for fun but then also so the system clock is a 
-   * multiple of typical audio sampling rates.
-   */
   stdio_init_all();
   set_sys_clock_khz(176000, true); 
-  gpio_set_function(AUDIO_PIN, GPIO_FUNC_PWM);
+  gpio_set_function(audio_pin, GPIO_FUNC_PWM);
 
-  int audio_pin_slice = pwm_gpio_to_slice_num(AUDIO_PIN);
+  int audio_pin_slice = pwm_gpio_to_slice_num(audio_pin);
 
   // Setup PWM interrupt to fire when PWM cycle is complete
   pwm_clear_irq(audio_pin_slice);
@@ -238,7 +238,7 @@ int main(void) {
   pwm_config_set_wrap(&config, 250); 
   pwm_init(audio_pin_slice, &config, true);
 
-  pwm_set_gpio_level(AUDIO_PIN, 0);
+  pwm_set_gpio_level(audio_pin, 0);
 
   // Servo from here
   uint offset = pio_add_program(pio, &servo_pio_program);
@@ -246,11 +246,11 @@ int main(void) {
   float freq = 50.0f;
   uint clk_div = 64;
 
-  servo_pio_program_init(pio, sm, offset, clk_div, SERVO_PIN);
+  servo_pio_program_init(pio, state_machine, offset, clk_div, servo_pin);
 
   uint cycles = clock_get_hz(clk_sys) / (freq * clk_div);
   uint32_t period = (cycles -3) / 3;  
-  pio_pwm_set_period(pio, sm, period);
+  pio_pwm_set_period(pio, state_machine, period);
 
   // Wifi begin
   if (cyw43_arch_init()) {
@@ -269,9 +269,10 @@ int main(void) {
   // Wifi end
   int state = 0;
   while(true) {
+    printf("STATE: %d\n", state);
     if(state == 0) {
       cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-      if(gpio_get(PIR_PIN)) {
+      if(gpio_get(pir_pin)) {
 	if(!tcp_client_open(tcpconn)) {
 	  tcp_result(tcpconn, -1);
 	  return 0;
@@ -285,14 +286,14 @@ int main(void) {
 	tcpconn->complete = false;
 	state = 2;
 	wav_playing = true;
-	servo_value = MOUTH_CLOSED;
+	servo_value = mouth_closed;
 	irq_set_enabled(PWM_IRQ_WRAP, true);
       }
     }
     if(state == 2) {
       if(wav_playing) {
 	// FIXME: Turn 2.6 factor into a variable calculated from sample data
-	pio_pwm_set_level(pio, sm, MOUTH_CLOSED - (servo_value * 2.6));
+	pio_pwm_set_level(pio, state_machine, mouth_closed - (servo_value * 2.6));
       } else {
 	state = 0;
       }
