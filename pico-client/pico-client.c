@@ -33,10 +33,8 @@ const PIO pio = pio0;
 const int state_machine = 0;
 const int mouth_open = 1666; // Currently unused
 const int mouth_closed = 2000;
+const int read_ahead = 800; // Number of samples to read ahead of audio for better sync
 int servo_value = mouth_closed;
-int count = 0;
-int high_value = 0;
-int low_value = 255;
 
 // Audio related
 const int audio_pin = 28; // GP28
@@ -173,35 +171,13 @@ void pwm_interrupt_handler() {
   pwm_clear_irq(pwm_gpio_to_slice_num(audio_pin));
   if(wav_position < (tcpconn->buffer_len<<3)) {
     // allow the pwm value to repeat for 8 cycles this is >>3
-    if(wav_position % 8 == 0) {
-      int sample_value = 0;
-      if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + 800 >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):800)] < 127) { // Inverse samples pointing 'downwards' (below 127)
-	sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + 800 >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):800)]) + 127;
-      } else {
-	sample_value = tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + 800 >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):800)];
-      }
-      sample_value -= 127;
-      if(sample_value > high_value) {
-	high_value = sample_value;
-      }
-      if(sample_value < low_value) {
-	low_value = sample_value;
-      }
-      count++;
-      if(count == span) {
-	servo_value = (low_value + high_value) / 2;
-	count = 0;
-	high_value = 0;
-	low_value = 255;
-      }
-    }
     pwm_set_gpio_level(audio_pin, tcpconn->buffer[wav_position>>3] * (audio_volume <= 0.0 || audio_volume >= 1.0 ?0.5:audio_volume));
     wav_position++;
   } else {
     // reset to start
+    wav_playing = false;
     wav_position = 0;
     servo_value = mouth_closed;
-    wav_playing = false;
     pio_pwm_set_level(pio, state_machine, servo_value);
     irq_set_enabled(PWM_IRQ_WRAP, false);
   }
@@ -301,6 +277,27 @@ int main(void) {
     // FIXME: Due to this sleep the mouth movement is always behind the sound. Find way to sample ahead 100 ms for the servo
     // I could add 100 ms samples to the beginning of the sample data. Then always calculate servo value from + 100 ms samples ahead
     // while the sound still plays from wav_position>>3
+    if(wav_playing) {
+      int sample_value = 0;
+      int high_value = 0;
+      int low_value = 255;
+      // Read ahead 'read_ahead' samples for servo movement, but do it at steps of 8 as this is plenty to do an average
+      for(int samples = 0; samples < read_ahead; samples += 8) {
+	if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples + read_ahead >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples + read_ahead)] < 127) { // Inverse samples pointing 'downwards' (below 127)
+	  sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples + read_ahead >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples + read_ahead)]) + 127;
+	} else {
+	  sample_value = tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples + read_ahead >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples + read_ahead)];
+	}
+	sample_value -= 127;
+	if(sample_value > high_value) {
+	  high_value = sample_value;
+	}
+	if(sample_value < low_value) {
+	  low_value = sample_value;
+	}
+      }
+      servo_value = (low_value + high_value) / 2;
+    }
     sleep_ms(100);
   }
   cyw43_arch_deinit();
