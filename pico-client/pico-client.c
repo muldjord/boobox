@@ -38,7 +38,7 @@ int servo_value = mouth_closed;
 
 // Audio related
 const int audio_pin = 28; // GP28
-const float audio_volume = 0.5; // 0.1 - 1.0
+const float audio_volume = 1.0; // 0.1 - 1.0
 const int span = 20;
 bool wav_playing = false;
 int wav_position = 0;
@@ -268,32 +268,30 @@ int main(void) {
     }
     if(state == 2) {
       if(wav_playing) {
+	int sample_value = 0;
+	int high_value = 0;
+	int low_value = 255;
+	// Read ahead 'read_ahead' samples for servo movement but do it at steps of 8 as we don't need to look at every sample
+	for(int samples = read_ahead; samples < read_ahead * 2; samples += 8) {
+	  if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)] < 127) { // Inverse samples pointing 'downwards' (below 127)
+	    sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)]) + 127;
+	  } else {
+	    sample_value = tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)];
+	  }
+	  sample_value -= 127;
+	  if(sample_value > high_value) {
+	    high_value = sample_value;
+	  }
+	  if(sample_value < low_value) {
+	    low_value = sample_value;
+	  }
+	}
+	servo_value = (low_value + high_value) / 2;
 	// FIXME: Turn 2.6 factor into a variable calculated from sample data
 	pio_pwm_set_level(pio, state_machine, mouth_closed - (servo_value * 2.6));
       } else {
 	state = 0;
       }
-    }
-    if(wav_playing) {
-      int sample_value = 0;
-      int high_value = 0;
-      int low_value = 255;
-      // Read ahead 'read_ahead' samples for servo movement but do it at steps of 8 as we don't need to look at every sample
-      for(int samples = read_ahead; samples < read_ahead * 2; samples += 8) {
-	if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)] < 127) { // Inverse samples pointing 'downwards' (below 127)
-	  sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)]) + 127;
-	} else {
-	  sample_value = tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)];
-	}
-	sample_value -= 127;
-	if(sample_value > high_value) {
-	  high_value = sample_value;
-	}
-	if(sample_value < low_value) {
-	  low_value = sample_value;
-	}
-      }
-      servo_value = (low_value + high_value) / 2;
     }
     sleep_ms(100);
   }
