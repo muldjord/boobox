@@ -33,17 +33,17 @@ const PIO pio = pio0;
 const int state_machine = 0;
 const int mouth_open = 1666; // Currently unused
 const int mouth_closed = 2000;
+int servo_value = mouth_closed;
+int count = 0;
+int high_value = 0;
+int low_value = 255;
 
 // Audio related
 const int audio_pin = 28; // GP28
 const float audio_volume = 0.5; // 0.1 - 1.0
 const int span = 20;
-int count = 0;
-int high_value = 0;
-int low_value = 255;
 bool wav_playing = false;
 int wav_position = 0;
-int servo_value = mouth_closed;
 
 // TCP socket related
 #define BUF_SIZE 128000
