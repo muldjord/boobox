@@ -278,7 +278,7 @@ int main(void) {
       int sample_value = 0;
       int high_value = 0;
       int low_value = 255;
-      // Read ahead 'read_ahead' samples for servo movement, but do it at steps of 8 as this is plenty to do an average
+      // Read ahead 'read_ahead' samples for servo movement but do it at steps of 8 as we don't need to look at every sample
       for(int samples = 0; samples < read_ahead; samples += 8) {
 	if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples + read_ahead >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples + read_ahead)] < 127) { // Inverse samples pointing 'downwards' (below 127)
 	  sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples + read_ahead >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples + read_ahead)]) + 127;
