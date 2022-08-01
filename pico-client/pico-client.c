@@ -271,7 +271,7 @@ int main(void) {
 	int high_value = 0;
 	int low_value = 255;
 	int span = 40;
-	// Read ahead 'read_ahead' samples for servo movement but do it at steps of 8 as we don't need to look at every sample
+	// Read ahead 'read_ahead' samples to get better audio sync with jaw movement
 	for(int samples = read_ahead; samples < read_ahead + span; ++samples) {
 	  if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)] < 127) { // Inverse samples pointing 'downwards' (below 127)
 	    sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)]) + 127;
