@@ -25,10 +25,10 @@
 #include "servo.pio.h"
 
 // Motion sensor related
-const int pir_pin = 15; // GP15
+const int pir_pin = 22; // GP22
 
 // Servo related
-const int servo_pin = 16; // GP16
+const int servo_pin = 26; // GP26
 const PIO pio = pio0;
 const int state_machine = 0;
 const int mouth_open = 1666; // Currently unused
