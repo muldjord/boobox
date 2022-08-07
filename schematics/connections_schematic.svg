@@ -30,8 +30,8 @@
      inkscape:bbox-nodes="true"
      inkscape:snap-others="false"
      inkscape:zoom="3.1108586"
-     inkscape:cx="120.06332"
-     inkscape:cy="137.42187"
+     inkscape:cx="134.52878"
+     inkscape:cy="146.4226"
      inkscape:window-width="2486"
      inkscape:window-height="1376"
      inkscape:window-x="74"
@@ -176,6 +176,12 @@
        width="117.07487"
        height="31.226631"
        id="rect73154-7-9-4-6-7" />
+    <rect
+       x="400"
+       y="275"
+       width="52.362141"
+       height="13.622438"
+       id="rect11542-7-2-0-3-7" />
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -191,8 +197,8 @@
     <rect
        style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.994421"
        id="rect848"
-       width="27.781256"
-       height="44.979172"
+       width="27.781271"
+       height="48.947899"
        x="104.51041"
        y="63.5"
        ry="0" />
@@ -201,8 +207,8 @@
        id="rect848-0"
        width="18.520828"
        height="17.197916"
-       x="142.875"
-       y="99.218727"
+       x="142.87502"
+       y="95.249962"
        ry="0" />
     <circle
        style="opacity:1;fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
@@ -213,20 +219,20 @@
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-62"
-       cx="145.52083"
-       cy="101.86458"
+       cx="145.52084"
+       cy="97.895813"
        r="1.3229166" />
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-62-6"
-       cx="145.52083"
-       cy="105.83333"
+       cx="145.52084"
+       cy="101.86456"
        r="1.3229166" />
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-62-1"
-       cx="145.52083"
-       cy="109.80208"
+       cx="145.52084"
+       cy="105.83331"
        r="1.3229166" />
     <circle
        style="fill:#a0a0a0;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
@@ -253,6 +259,24 @@
        cy="85.989586"
        r="1.3229166" />
     <circle
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
+       id="path1476-3-6-3"
+       cx="129.64584"
+       cy="93.927063"
+       r="1.3229166" />
+    <circle
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
+       id="path1476-3-6-6"
+       cx="129.64584"
+       cy="97.895813"
+       r="1.3229166" />
+    <circle
+       style="fill:#a0a0a0;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
+       id="path1476-3-6-6-3"
+       cx="129.64584"
+       cy="105.83331"
+       r="1.3229166" />
+    <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-6"
        cx="129.64583"
@@ -267,14 +291,14 @@
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-6-1-2"
-       cx="107.15624"
-       cy="105.83334"
+       cx="129.64584"
+       cy="109.80206"
        r="1.3229166" />
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-6-1-2-7"
-       cx="129.64583"
-       cy="105.83334"
+       cx="129.64584"
+       cy="101.86456"
        r="1.3229166" />
     <text
        xml:space="preserve"
@@ -285,9 +309,9 @@
        y="0"><tspan
          x="423.16853"
          y="284.43753"
-         id="tspan18484"><tspan
+         id="tspan33139"><tspan
            style="text-align:end;text-anchor:end"
-           id="tspan18482">VBUS</tspan></tspan></text>
+           id="tspan33137">VBUS</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,1.2582439,-17.925278)"
@@ -297,9 +321,9 @@
        y="0"><tspan
          x="427.90292"
          y="284.43753"
-         id="tspan18488"><tspan
+         id="tspan33143"><tspan
            style="text-align:end;text-anchor:end"
-           id="tspan18486">GND</tspan></tspan></text>
+           id="tspan33141">GND</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,1.2582439,-2.050278)"
@@ -309,52 +333,42 @@
        y="0"><tspan
          x="424.09041"
          y="284.43753"
-         id="tspan18492"><tspan
+         id="tspan33147"><tspan
            style="text-align:end;text-anchor:end"
-           id="tspan18490">GP28</tspan></tspan></text>
+           id="tspan33145">GP28</tspan></tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.27835529,0,0,0.32795248,-1.7067661,13.824722)"
-       id="text11540-5-9-9"
-       style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;text-align:start;white-space:pre;shape-inside:url(#rect11542-7-2-0);fill:#000000;fill-opacity:1;stroke:none"
-       x="78.687737"
-       y="0"><tspan
-         x="400"
-         y="284.43753"
-         id="tspan18494">GP15</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.27835529,0,0,0.32795248,36.657819,9.8559628)"
+       transform="matrix(0.27835529,0,0,0.32795248,36.657834,5.8872008)"
        id="text11540-5-9-9-7"
        style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;text-align:start;white-space:pre;shape-inside:url(#rect11542-7-2-0-8);fill:#000000;fill-opacity:1;stroke:none"
        x="78.687737"
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18496">+5V</tspan></text>
+         id="tspan33149">+5V</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.27835529,0,0,0.32795248,36.509942,13.778594)"
+       transform="matrix(0.27835529,0,0,0.32795248,36.509957,9.809832)"
        id="text11540-5-9-9-7-23"
        style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;text-align:start;white-space:pre;shape-inside:url(#rect11542-7-2-0-8-0);fill:#000000;fill-opacity:1;stroke:none"
        x="78.687737"
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18498">PWM</tspan></text>
+         id="tspan33151">PWM</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.27835529,0,0,0.32795248,36.657819,17.793462)"
+       transform="matrix(0.27835529,0,0,0.32795248,36.657834,13.8247)"
        id="text11540-5-9-9-7-2"
        style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;text-align:start;white-space:pre;shape-inside:url(#rect11542-7-2-0-8-9);fill:#000000;fill-opacity:1;stroke:none"
        x="78.687737"
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18500">GND</tspan></text>
+         id="tspan33153">GND</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.27835529,0,0,0.32795248,1.3423299,13.824722)"
+       transform="matrix(0.27835529,0,0,0.32795248,1.2698617,9.855955)"
        id="text11540-5-9-9-6"
        style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11542-7-2-0-3);fill:#000000;fill-opacity:1;stroke:none"
        x="78.687744"
@@ -363,9 +377,23 @@
        inkscape:transform-center-y="-0.57266011"><tspan
          x="424.09041"
          y="284.43753"
-         id="tspan18504"><tspan
+         id="tspan33157"><tspan
            style="text-align:end;text-anchor:end"
-           id="tspan18502">GP16</tspan></tspan></text>
+           id="tspan33155">GP26</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.27835529,0,0,0.32795248,1.3800443,17.793455)"
+       id="text11540-5-9-9-6-5"
+       style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11542-7-2-0-3-7);fill:#000000;fill-opacity:1;stroke:none"
+       x="78.687744"
+       y="0"
+       inkscape:transform-center-x="9.5531998"
+       inkscape:transform-center-y="-0.57266011"><tspan
+         x="424.09041"
+         y="284.43753"
+         id="tspan33161"><tspan
+           style="text-align:end;text-anchor:end"
+           id="tspan33159">GP22</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="scale(0.26458333)"
@@ -378,22 +406,22 @@
        style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="376.51565"
-         id="tspan18506">Pi Pico W</tspan></text>
+         id="tspan33163">Pi Pico W</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0,0.27550514,-0.27471787,0,259.61235,3.610119)"
+       transform="matrix(0,0.27550514,-0.27471787,0,259.61237,-0.35864295)"
        id="text73152-5"
        style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="376.51565"
-         id="tspan18508">Servo</tspan></text>
+         id="tspan33165">Servo</tspan></text>
     <rect
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.994421"
        id="rect848-0-7"
        width="18.520828"
        height="17.19792"
-       x="142.875"
-       y="119.06246"
+       x="142.87502"
+       y="116.41662"
        ry="0"
        inkscape:export-filename="/home/muldjord/programming/boobox/pico-client/rect848-0-7.png"
        inkscape:export-xdpi="300"
@@ -401,8 +429,8 @@
     <rect
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.994421"
        id="rect848-0-7-2"
-       width="22.489569"
-       height="33.072891"
+       width="22.489594"
+       height="27.781225"
        x="142.875"
        y="63.500008"
        ry="0" />
@@ -417,59 +445,59 @@
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-62-3"
-       cx="145.52083"
-       cy="121.70833"
+       cx="145.52084"
+       cy="119.06248"
        r="1.3229166" />
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-62-6-6"
-       cx="145.52083"
-       cy="125.67708"
+       cx="145.52084"
+       cy="123.03123"
        r="1.3229166" />
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-62-1-1"
-       cx="145.52083"
-       cy="129.64581"
+       cx="145.52084"
+       cy="126.99997"
        r="1.3229166" />
     <text
        xml:space="preserve"
-       transform="matrix(0.27835529,0,0,0.32795248,36.65782,29.699701)"
+       transform="matrix(0.27835529,0,0,0.32795248,36.657835,27.053856)"
        id="text11540-5-9-9-7-29"
        style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;text-align:start;white-space:pre;shape-inside:url(#rect11542-7-2-0-8-92);fill:#000000;fill-opacity:1;stroke:none"
        x="78.687737"
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18510">+5V</tspan></text>
+         id="tspan33167">+5V</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.27835529,0,0,0.32795248,36.509943,33.622333)"
+       transform="matrix(0.27835529,0,0,0.32795248,36.509958,30.976488)"
        id="text11540-5-9-9-7-23-3"
        style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;text-align:start;white-space:pre;shape-inside:url(#rect11542-7-2-0-8-0-2);fill:#000000;fill-opacity:1;stroke:none"
        x="78.687737"
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18512">TRIG</tspan></text>
+         id="tspan33169">TRIG</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0.27835529,0,0,0.32795248,36.65782,37.637201)"
+       transform="matrix(0.27835529,0,0,0.32795248,36.657835,34.991356)"
        id="text11540-5-9-9-7-2-1"
        style="font-style:normal;font-weight:normal;font-size:10.6667px;line-height:1.25;font-family:sans-serif;text-align:start;white-space:pre;shape-inside:url(#rect11542-7-2-0-8-9-8);fill:#000000;fill-opacity:1;stroke:none"
        x="78.687737"
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18514">GND</tspan></text>
+         id="tspan33171">GND</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0,0.27550514,-0.27471787,0,259.61234,23.453857)"
+       transform="matrix(0,0.27550514,-0.27471787,0,259.61236,20.808012)"
        id="text73152-5-9"
        style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="376.51565"
-         id="tspan18516">PIR</tspan></text>
+         id="tspan33173">PIR</tspan></text>
     <circle
        style="fill:#000101;fill-opacity:1;stroke:none;stroke-width:1.32292;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.994421"
        id="path1476-62-3-0-4"
@@ -515,7 +543,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18518">+5V</tspan></text>
+         id="tspan33175">+5V</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.509945,-21.94013)"
@@ -525,7 +553,7 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18520">PWM</tspan></text>
+         id="tspan33177">PWM</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0.27835529,0,0,0.32795248,36.657822,-17.925262)"
@@ -535,23 +563,31 @@
        y="0"><tspan
          x="400"
          y="284.43753"
-         id="tspan18522">GND</tspan></text>
+         id="tspan33179">GND</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0,0.27550514,-0.27471787,0,259.61234,-32.108606)"
+       transform="matrix(0,0.27550514,-0.27471787,0,259.57408,-32.019972)"
        id="text73152-5-9-3"
-       style="font-style:normal;font-weight:normal;font-size:18.6667px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9-4);fill:#000000;fill-opacity:1;stroke:none"><tspan
+       style="font-style:normal;font-weight:normal;font-size:15.3877px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9-4);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
-         y="376.51565"
-         id="tspan18524">LM386 Amp</tspan></text>
+         y="373.61451"
+         id="tspan33181">LM386 Amp</tspan></text>
     <text
        xml:space="preserve"
-       transform="matrix(0,0.27550514,-0.27471787,0,249.59844,-18.533435)"
+       transform="matrix(0,0.27550514,-0.27471787,0,254.00892,-18.489619)"
        id="text73152-5-9-3-1"
-       style="font-style:normal;font-weight:normal;font-size:10.2585px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9-4-6);fill:#000000;fill-opacity:1;stroke:none"><tspan
+       style="font-style:normal;font-weight:normal;font-size:7.69386px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9-4-6);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
-         y="369.07637"
-         id="tspan18526">Gain = 200</tspan></text>
+         y="366.80726"
+         id="tspan33183">Use
+</tspan><tspan
+         x="350"
+         y="376.42457"
+         id="tspan33185">200 gain
+</tspan><tspan
+         x="350"
+         y="386.04188"
+         id="tspan33187">schematic</tspan></text>
     <text
        xml:space="preserve"
        transform="matrix(0,0.27550514,-0.27471787,0,279.21691,-22.535301)"
@@ -559,10 +595,10 @@
        style="font-style:normal;font-weight:normal;font-size:10.2585px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect73154-7-9-4-6-7);fill:#000000;fill-opacity:1;stroke:none"><tspan
          x="350"
          y="369.07637"
-         id="tspan18528">8Ω 1W</tspan></text>
+         id="tspan33189">8Ω 1W</tspan></text>
     <path
        style="fill:none;stroke:#06ff0d;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 107.15625,105.83333 v 19.84375 l 38.36458,-1e-5"
+       d="m 129.64584,109.80207 0,13.22916 h 15.875"
        id="path129236"
        sodipodi:nodetypes="ccc" />
     <path
@@ -572,27 +608,27 @@
        sodipodi:nodetypes="cccc" />
     <path
        style="fill:none;stroke:#fff606;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 145.52083,105.83332 -15.875,1e-5"
+       d="m 145.52084,101.86457 h -15.875"
        id="path131662"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#ff0606;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 129.64583,66.145832 h 5.29167 v 55.562498 l 10.58333,-1e-5"
+       d="m 129.64583,66.145832 h 5.29167 l 1e-5,52.916648 h 10.58333"
        id="path131664"
        sodipodi:nodetypes="cccc" />
     <path
        style="fill:none;stroke:#ff0606;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 145.52083,101.86457 -10.58333,1e-5"
+       d="M 145.52084,97.895816 H 134.93751"
        id="path131666"
        sodipodi:nodetypes="cc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 129.64583,74.083332 h 7.9375 v 55.562498 l 7.9375,-1e-5"
+       d="m 129.64583,74.083332 h 7.9375 l 1e-5,52.916648 h 7.9375"
        id="path131668"
        sodipodi:nodetypes="cccc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 145.52083,109.80207 -7.9375,1e-5"
+       d="m 145.52084,105.83332 h -7.9375"
        id="path131670"
        sodipodi:nodetypes="cc" />
     <path
