@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.13)
 
 # Use 'cmake .. -DPICO_BOARD="pico_w" -DWIFI_SSID="YOUR_WIFI_SSID" -DWIFI_PASSWORD="YOUR_WIFI_PASSWORD" -DTCP_SERVER_IP="SERVERIP" -DTCP_SERVER_PORT="SERVERPORT" ..'
 
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
-
 include(pico_sdk_import.cmake)
+include(pico_extras_import.cmake)
 
 project(pico-client C CXX ASM)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 #set(PICO_CXX_ENABLE_EXCEPTIONS 1)
 #set(PICO_CXX_ENABLE_RTTI 1)
@@ -43,6 +43,12 @@ target_link_libraries(pico-client
   hardware_timer
   hardware_clocks
   hardware_pwm
+  pico_audio_i2s
+  )
+
+target_compile_definitions(pico-client PRIVATE
+  PICO_AUDIO_I2S_MONO_INPUT=1
+  USE_AUDIO_I2S=1
   )
 
 pico_add_extra_outputs(pico-client)

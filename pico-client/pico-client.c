@@ -10,25 +10,73 @@
 */
 
 #include <stdio.h>
-
+#include <math.h>
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
 #include "lwip/pbuf.h"
 #include "lwip/tcp.h"
-#include "hardware/irq.h"
-#include "hardware/pwm.h"
-#include "hardware/sync.h"
+//#include "hardware/irq.h"
+//#include "hardware/pwm.h"
+//#include "hardware/sync.h"
 #include "hardware/clocks.h"
+#include "hardware/structs/clocks.h" // Needed by i2s
 #include "hardware/pio.h"
 #include "hardware/gpio.h"
+#include "pico/audio_i2s.h"
+#include "pico/binary_info.h"
+
+bi_decl(bi_3pins_with_names(PICO_AUDIO_I2S_DATA_PIN, "I2S DIN", PICO_AUDIO_I2S_CLOCK_PIN_BASE, "I2S BCK", PICO_AUDIO_I2S_CLOCK_PIN_BASE+1, "I2S LRCK"));
 
 #include "servo.pio.h"
+
+//#define SINE_WAVE_TABLE_LEN 2048
+#define SAMPLES_PER_BUFFER 256
+
+//static int16_t sine_wave_table[SINE_WAVE_TABLE_LEN];
+
+struct audio_buffer_pool *init_audio() {
+
+  static audio_format_t audio_format = {
+    .format = AUDIO_BUFFER_FORMAT_PCM_U8,
+    //.sample_freq = 24000,
+    .sample_freq = 11025,
+    .channel_count = 1,
+  };
+
+  static struct audio_buffer_format producer_format = {
+    .format = &audio_format,
+    .sample_stride = 2
+  };
+
+  struct audio_buffer_pool *producer_pool = audio_new_producer_pool(&producer_format, 3, SAMPLES_PER_BUFFER); // todo correct size
+  bool __unused ok;
+  const struct audio_format *output_format;
+  struct audio_i2s_config config = {
+    .data_pin = PICO_AUDIO_I2S_DATA_PIN,
+    .clock_pin_base = PICO_AUDIO_I2S_CLOCK_PIN_BASE,
+    .dma_channel = 0,
+    .pio_sm = 0,
+  };
+
+  output_format = audio_i2s_setup(&audio_format, &config);
+  if (!output_format) {
+    panic("PicoAudio: Unable to open audio device.\n");
+  }
+
+  ok = audio_i2s_connect(producer_pool);
+  assert(ok);
+  audio_i2s_set_enabled(true);
+  return producer_pool;
+}
+
+
+// NOTE!!! See pico-playground example for... well, an example
 
 // Motion sensor related
 const int pir_pin = 22; // GP22
 
 // Servo related
-const int servo_pin = 26; // GP26
+const int servo_pin = 21; // GP26
 const PIO pio = pio0;
 const int state_machine = 0;
 const int mouth_open = 1666; // Currently unused
@@ -36,9 +84,19 @@ const int mouth_closed = 2000;
 const int read_ahead = 800; // Number of samples to read ahead of audio for better sync
 int servo_value = mouth_closed;
 
+void pio_pwm_set_period(PIO pio, uint state_machine, uint32_t period) {
+  pio_sm_set_enabled(pio, state_machine, false);
+  pio_sm_put_blocking(pio, state_machine, period);
+  pio_sm_exec(pio, state_machine, pio_encode_pull(false, false));
+  pio_sm_exec(pio, state_machine, pio_encode_out(pio_isr, 32));
+  pio_sm_set_enabled(pio, state_machine, true);
+}
+
+void pio_pwm_set_level(PIO pio, uint state_machine, uint32_t level) {
+  pio_sm_put_blocking(pio, state_machine, level);
+}
+
 // Audio related
-const int audio_pin = 28; // GP28
-const float audio_volume = 1.0; // 0.1 - 1.0
 bool wav_playing = false;
 int wav_position = 0;
 
@@ -70,9 +128,11 @@ static err_t tcp_client_close(void *arg) {
     tcpconn->tcp_pcb = NULL;
   }
   // FIXME: Hack to remove noise at end
+  /*
   if(tcpconn->buffer_len > 200) {
     tcpconn->buffer_len -= 200;
   }
+  */
   tcpconn->complete = true;
   return err;
 }
@@ -153,67 +213,9 @@ static TCP_CLIENT_T* tcp_client_init(void) {
   return tcpconn;
 }
 
-// PWM audio related
-void pio_pwm_set_period(PIO pio, uint state_machine, uint32_t period) {
-  pio_sm_set_enabled(pio, state_machine, false);
-  pio_sm_put_blocking(pio, state_machine, period);
-  pio_sm_exec(pio, state_machine, pio_encode_pull(false, false));
-  pio_sm_exec(pio, state_machine, pio_encode_out(pio_isr, 32));
-  pio_sm_set_enabled(pio, state_machine, true);
-}
-
-void pio_pwm_set_level(PIO pio, uint state_machine, uint32_t level) {
-  pio_sm_put_blocking(pio, state_machine, level);
-}
-
-void pwm_interrupt_handler() {
-  pwm_clear_irq(pwm_gpio_to_slice_num(audio_pin));
-  if(wav_position < (tcpconn->buffer_len<<3)) {
-    // allow the pwm value to repeat for 8 cycles this is >>3
-    pwm_set_gpio_level(audio_pin, tcpconn->buffer[wav_position>>3] * (audio_volume <= 0.0 || audio_volume >= 1.0 ?0.5:audio_volume));
-    wav_position++;
-  } else {
-    // reset to start
-    wav_playing = false;
-    wav_position = 0;
-    servo_value = mouth_closed;
-    pio_pwm_set_level(pio, state_machine, servo_value);
-    irq_set_enabled(PWM_IRQ_WRAP, false);
-  }
-}
-
 // Main
 int main(void) {
   stdio_init_all();
-  set_sys_clock_khz(176000, true); 
-  gpio_set_function(audio_pin, GPIO_FUNC_PWM);
-
-  int audio_pin_slice = pwm_gpio_to_slice_num(audio_pin);
-
-  // Setup PWM interrupt to fire when PWM cycle is complete
-  pwm_clear_irq(audio_pin_slice);
-  pwm_set_irq_enabled(audio_pin_slice, true);
-  // set the handle function above
-  irq_set_exclusive_handler(PWM_IRQ_WRAP, pwm_interrupt_handler); 
-
-  // Setup PWM for audio output
-  pwm_config config = pwm_get_default_config();
-  /* Base clock 176,000,000 Hz divide by wrap 250 then the clock divider further divides
-   * to set the interrupt rate. 
-   * 
-   * 11 KHz is fine for speech. Phone lines generally sample at 8 KHz
-   * 
-   * 
-   * So clkdiv should be as follows for given sample rate
-   *  8.0f for 11 KHz
-   *  4.0f for 22 KHz
-   *  2.0f for 44 KHz etc
-   */
-  pwm_config_set_clkdiv(&config, 8.0f); 
-  pwm_config_set_wrap(&config, 250); 
-  pwm_init(audio_pin_slice, &config, true);
-
-  pwm_set_gpio_level(audio_pin, 0);
 
   // Servo from here
   uint offset = pio_add_program(pio, &servo_pio_program);
@@ -239,9 +241,17 @@ int main(void) {
 
   tcpconn = tcp_client_init();
   if(!tcpconn) {
+    printf("No wifi!\n");
     return 0;
   }
   // Wifi end
+
+  // Audio i2s begin
+  printf("Initializing i2s audio!\n");
+  struct audio_buffer_pool *ap = init_audio();
+  printf("Audio ok!\n");
+  // Audio i2s end
+
   int state = 0;
   while(true) {
     printf("STATE: %d\n", state);
@@ -266,6 +276,23 @@ int main(void) {
       }
     }
     if(state == 2) {
+      struct audio_buffer *buffer = take_audio_buffer(ap, true);
+      for (uint i = 0; i < buffer->max_sample_count; i++) {
+	if(wav_position < tcpconn->buffer_len) {
+	  buffer->buffer->bytes[i] == tcpconn->buffer[i];
+	} else {
+	  buffer->buffer->bytes[i] == 127;
+	}
+      }
+      buffer->sample_count = buffer->max_sample_count;
+      wav_position += buffer->sample_count;
+      give_audio_buffer(ap, buffer);
+      if(wav_position > tcpconn->buffer_len - read_ahead) {
+	wav_playing = false;
+	wav_position = 0;
+	servo_value = mouth_closed;
+	pio_pwm_set_level(pio, state_machine, servo_value);
+      }
       if(wav_playing) {
 	int sample_value = 0;
 	int high_value = 0;
@@ -273,10 +300,10 @@ int main(void) {
 	int span = 40;
 	// Read ahead 'read_ahead' samples to get better audio sync with jaw movement
 	for(int samples = read_ahead; samples < read_ahead + span; ++samples) {
-	  if(tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)] < 127) { // Inverse samples pointing 'downwards' (below 127)
-	    sample_value = (127 - tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)]) + 127;
+	  if(tcpconn->buffer[(wav_position) + ((wav_position) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position):samples)] < 127) { // Inverse samples pointing 'downwards' (below 127)
+	    sample_value = (127 - tcpconn->buffer[(wav_position) + ((wav_position) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position):samples)]) + 127;
 	  } else {
-	    sample_value = tcpconn->buffer[(wav_position>>3) + ((wav_position>>3) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position>>3):samples)];
+	    sample_value = tcpconn->buffer[(wav_position) + ((wav_position) + samples >= tcpconn->buffer_len?tcpconn->buffer_len - (wav_position):samples)];
 	  }
 	  sample_value -= 127;
 	  if(sample_value > high_value) {
@@ -299,3 +326,38 @@ int main(void) {
   free(tcpconn);
   return 0;
 }
+/*
+int main(void) {
+  stdio_init_all();
+  for (int i = 0; i < SINE_WAVE_TABLE_LEN; i++) {
+    sine_wave_table[i] = 32767 * cosf(i * 2 * (float) (M_PI / SINE_WAVE_TABLE_LEN));
+  }
+  struct audio_buffer_pool *ap = init_audio();
+  uint32_t step = 0x200000;
+  uint32_t pos = 0;
+  uint32_t pos_max = 0x10000 * SINE_WAVE_TABLE_LEN;
+  uint vol = 128;
+  while (true) {
+    int c = getchar_timeout_us(0);
+    if (c >= 0) {
+      if (c == '-' && vol) vol -= 4;
+      if ((c == '=' || c == '+') && vol < 255) vol += 4;
+      if (c == '[' && step > 0x10000) step -= 0x10000;
+      if (c == ']' && step < (SINE_WAVE_TABLE_LEN / 16) * 0x20000) step += 0x10000;
+      if (c == 'q') break;
+      printf("vol = %d, step = %d      \r", vol, step >> 16);
+    }
+    struct audio_buffer *buffer = take_audio_buffer(ap, true);
+    int16_t *samples = (int16_t *) buffer->buffer->bytes;
+    for (uint i = 0; i < buffer->max_sample_count; i++) {
+      samples[i] = (vol * sine_wave_table[pos >> 16u]) >> 8u;
+      pos += step;
+      if (pos >= pos_max) pos -= pos_max;
+    }
+    buffer->sample_count = buffer->max_sample_count;
+    give_audio_buffer(ap, buffer);
+  }
+  puts("\n");
+  return 0;
+}
+*/
