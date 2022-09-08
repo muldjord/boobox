@@ -49,7 +49,7 @@ signals:
 
 private slots:
   void handleConnection();
-  void readData();
+  //void readData();
   void dataWritten(qint64 bytes);
   
 private:
