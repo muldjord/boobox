@@ -72,7 +72,11 @@ void BooBox::handleConnection()
   QFile wavFile(fileName);
   if(wavFile.open(QIODevice::ReadOnly)) {
     QByteArray outgoingData = wavFile.readAll();
-    outgoingData.remove(0, outgoingData.indexOf("data") + 8); // Also remove data size of 4 bytes
+    outgoingData.remove(0, outgoingData.indexOf("data") + 4); // + 4 is to also remove the char bytes for 'data'
+    qint32 data_size = 0;
+    memcpy(&data_size, outgoingData, 4);
+    outgoingData.remove(0, 4); // Remove 4 byte that indicate data size
+    outgoingData = outgoingData.left(data_size);
     wavFile.close();
     outgoingSize = outgoingData.size();
     printf("Sending: '%s'\n", qPrintable(fileName));
