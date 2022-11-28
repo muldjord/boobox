@@ -1,5 +1,5 @@
 # BooBox
-A fun Raspberry Pi Pico W project that combines a few pieces of hardware to create an IoT talking skull.
+A fun Raspberry Pi Pico W project that combines a few pieces of hardware to create an motion-activated talking skull.
 
 Whenever the motion detector triggers The Pico fetches a sound from the provided TCP server and plays it through the speaker. The jaw matches the audio using a tiny servo that pushes down on a piston that rests on whatever surface the skull is placed on. The skull / Pico W is powered using an ordinary phone charger and a micro USB cable.
 
