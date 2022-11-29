@@ -20,7 +20,7 @@ target_sources(pico_murray PRIVATE pico_murray.c)
 pico_set_program_name(pico_murray "pico_murray")
 pico_set_program_version(pico_murray "1.0.0")
 
-# pico_enable_stdio_usb(pico_murray 1)
+pico_enable_stdio_usb(pico_murray 1)
 
 target_compile_definitions(pico_murray PRIVATE
   WIFI_SSID=\"${WIFI_SSID}\"
