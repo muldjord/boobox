@@ -9,7 +9,7 @@ NOTE! All sounds added to the BooBox server `data` folder MUST be 11KHz 8 bit un
 
 Here's an example of a BooBox I made looking like the fiendlishly funny "Murray the Demonic Talking Skull" from the Monkey Island games:
 
-[![](https://img.youtube.com/vi/7ivf-3M5PTc/0.jpg)](https://www.youtube.com/watch?v=7ivf-3M5PTc)
+[![](https://img.youtube.com/vi/NpiYJFMU0TQ/0.jpg)](https://www.youtube.com/watch?v=NpiYJFMU0TQ)
 
 ## What you need
 
