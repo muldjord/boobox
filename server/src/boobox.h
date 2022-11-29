@@ -49,7 +49,6 @@ signals:
 
 private slots:
   void handleConnection();
-  //void readData();
   void dataWritten(qint64 bytes);
   
 private:
@@ -57,7 +56,7 @@ private:
   QTcpServer *server = nullptr;
   QTcpSocket *connection = nullptr;
   QByteArray incomingData = "";
-  qint64 outgoingSize = 0;
+  qint32 outgoingSize = 0;
   qint64 bytesWritten = 0;
 };
 
