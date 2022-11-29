@@ -47,10 +47,10 @@ $ ./BooBox
 ### Pico client
 * Compile the pico_murray client
 ```
-$ cd pico_boobox
+$ cd client
 $ mkdir build
 $ cd build
-$ cmake -DPICO_BOARD="pico_w" -DWIFI_SSID="SSID" -DWIFI_PASSWORD="PASS" -DTCP_SERVER_IP="SERVERIP" -DTCP_SERVER_PORT="SERVERPORT" ..
+$ cmake -DPICO_BOARD="pico_w" -DWIFI_SSID="SSID" -DWIFI_PASSWORD="PASS" -DTCP_SERVER_IP="SERVERIP" -DTCP_SERVER_PORT="4242" ..
 $ make
 ```
 * Hold down the 'reprogram' button on the pico and connect the USB cable to the PC, then let go of the button to put the Pico into mass storage mode.
