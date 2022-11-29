@@ -16,14 +16,14 @@
 #include "lwip/tcp.h"
 
 // TCP socket related
-#define BUF_SIZE 128000
+#define BUF_SIZE 192000
 
 typedef struct TCP_CLIENT_T {
   struct tcp_pcb *tcp_pcb;
   ip_addr_t remote_addr;
   uint8_t buffer[BUF_SIZE];
-  int buffer_len;
-  int play_head;
+  uint32_t buffer_len;
+  uint32_t play_head;
   bool play;
   bool complete;
 } TCP_CLIENT_T;
@@ -35,12 +35,12 @@ static __attribute__((aligned(8))) pio_i2s i2s;
 static void dma_i2s_in_handler(void) {
   if(tcpconn->play) {
     if(*(int32_t**)dma_hw->ch[i2s.dma_ch_out_ctrl].read_addr == i2s.output_buffer) {
-      printf("Buffer 1\n");
+      //printf("Buffer 1\n");
       for(size_t i = 0; i < AUDIO_BUFFER_FRAMES * 2; i++) {
 	i2s.output_buffer[i] = tcpconn->buffer[tcpconn->play_head + (i / 2)]<<23;
       }
     } else {
-      printf("Buffer 2\n");
+      //printf("Buffer 2\n");
       for(size_t i = 0; i < AUDIO_BUFFER_FRAMES * 2; i++) {
 	(&i2s.output_buffer[STEREO_BUFFER_SIZE])[i] = tcpconn->buffer[tcpconn->play_head + (i / 2)]<<23;
       }
@@ -49,12 +49,12 @@ static void dma_i2s_in_handler(void) {
   } else {
     // No sound is playing so just send silence to the DMA buffers
     if(*(int32_t**)dma_hw->ch[i2s.dma_ch_out_ctrl].read_addr == i2s.output_buffer) {
-      printf("Buffer 1\n");
+      //printf("Buffer 1\n");
       for(size_t i = 0; i < AUDIO_BUFFER_FRAMES * 2; i++) {
 	i2s.output_buffer[i] = 128;
       }
     } else {
-      printf("Buffer 2\n");
+      //printf("Buffer 2\n");
       for(size_t i = 0; i < AUDIO_BUFFER_FRAMES * 2; i++) {
 	(&i2s.output_buffer[STEREO_BUFFER_SIZE])[i] = 128;
       }
@@ -105,16 +105,17 @@ static err_t tcp_client_connected(void *arg, struct tcp_pcb *tpcb, err_t err) {
 
 err_t tcp_client_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err) {
   TCP_CLIENT_T *tcpconn = (TCP_CLIENT_T*)arg;
-  if (!p) {
-    return tcp_result(arg, -1);
-  }
-  cyw43_arch_lwip_check();
   if(p == NULL) { // pbuf is NULL if server closed the connection, meaning transfer was completed
+    printf("Wav data recieved: %d bytes\n", tcpconn->buffer_len);
     return tcp_result(arg, err);
-  } else if(p->tot_len > 0) {
-    const uint16_t buffer_left = BUF_SIZE - tcpconn->buffer_len;
-    tcpconn->buffer_len += pbuf_copy_partial(p, tcpconn->buffer + tcpconn->buffer_len,
-					     p->tot_len > buffer_left ? buffer_left : p->tot_len, 0);
+  }
+  if(p->tot_len > 0) {
+    const uint32_t buffer_left = BUF_SIZE - tcpconn->buffer_len;
+    //printf("tcpconn->buffer_len: %d, buffer_left: %d, p->tot_len: %d\n", tcpconn->buffer_len, buffer_left, p->tot_len);
+    tcpconn->buffer_len += pbuf_copy_partial(p,
+					     tcpconn->buffer + tcpconn->buffer_len,
+					     p->tot_len > buffer_left ? buffer_left : p->tot_len,
+					     0);
     tcp_recved(tpcb, p->tot_len);
   }
 
@@ -152,6 +153,7 @@ float wrap = 39062;
 
 void setMillis(int servoPin, float millis)
 {
+  printf("Setting servo to: %f\n", millis);
   pwm_set_gpio_level(servoPin, (millis/20000.f)*wrap);
 }
 
@@ -195,7 +197,7 @@ int main() {
   tcpconn = calloc(1, sizeof(TCP_CLIENT_T));
   ip4addr_aton(TCP_SERVER_IP, &tcpconn->remote_addr);
   while(true) {
-    printf("STATE: %d\n", state);
+    //printf("STATE: %d\n", state);
     if(state == 0) {
       if(gpio_get(PIR_PIN)) {
 	cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
@@ -212,28 +214,34 @@ int main() {
       cyw43_arch_poll();
     }
     if(state == 2) {
-      uint32_t value = 0;
-      uint32_t servoZero = 1610;
+      uint32_t servoValue = 0;
+      uint32_t servoZero = 1600;
       if(tcpconn->play == false) {
+	printf("Closing jaws\n");
 	setMillis(SERVO_PIN, servoZero);
 	state = 0;
       } else {
-	uint32_t lookAhead = 250;
-	uint8_t valueSpan = 64;
+	uint32_t lookAhead = 300;
+	uint8_t valueSpan = 100;
 	for(int i = tcpconn->play_head + lookAhead; i < tcpconn->play_head + lookAhead + valueSpan; ++i) {
 	  if(i >= tcpconn->buffer_len) {
 	    break;
 	  }
 	  int32_t curBufferValue = tcpconn->buffer[i];
 	  uint32_t curValue = abs(curBufferValue - 128);
-	  if(curValue > value) {
-	    value = curValue;
+	  if(curValue > servoValue) {
+	    servoValue = curValue;
 	  }
 	}
       }
-      setMillis(SERVO_PIN, servoZero - (value * 2.0));
+      servoValue *= 2.0;
+      if(servoValue > 250) {
+	servoValue = 250;
+      }
+      printf("servoValue: %d\n", servoValue);
+      setMillis(SERVO_PIN, servoZero - (servoValue));
     }
-    sleep_ms(100);
+    sleep_ms(50);
   }
   free(tcpconn);
   cyw43_arch_deinit();
