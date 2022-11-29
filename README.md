@@ -54,6 +54,6 @@ $ cmake -DPICO_BOARD="pico_w" -DWIFI_SSID="SSID" -DWIFI_PASSWORD="PASS" -DTCP_SE
 $ make
 ```
 * Hold down the 'reprogram' button on the pico and connect the USB cable to the PC, then let go of the button to put the Pico into mass storage mode.
-* Drag-n-drop the `pico_murray.uf2` file onto the Pico mass storage device.
+* Drag-n-drop the `pico_boobox.uf2` file onto the Pico mass storage device.
 
 If the server is running, everything is hooked up correctly and you've entered your wifi information and IP, your BooBox should now come to life!
