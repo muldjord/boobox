@@ -47,7 +47,7 @@ $ ./BooBox
 ### Pico client
 * Compile the pico_murray client
 ```
-$ cd pico_murray
+$ cd pico_boobox
 $ mkdir build
 $ cd build
 $ cmake -DPICO_BOARD="pico_w" -DWIFI_SSID="SSID" -DWIFI_PASSWORD="PASS" -DTCP_SERVER_IP="SERVERIP" -DTCP_SERVER_PORT="SERVERPORT" ..
