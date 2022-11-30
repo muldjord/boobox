@@ -5,7 +5,7 @@ Whenever the motion detector triggers The Pico fetches a sound from the provided
 
 I plan on making a more thorough step-by-step explanation on how to built your own BooBox when I get the time. For now, what follows is a quick and dirty walkthrough that should provide all necessary information although in a pretty basic and non-visual way.
 
-_**NOTE!** All sounds added to the BooBox server `data` folder **must** be 11KHz 8 bit unsigned! Due to memory limitations of the Raspberry Pi Pico the duration of the sounds must also be less than 192kb. Files bigger than this will play, but will be cut off._
+_**NOTE!** All sounds added to the BooBox server `data` folder **must** be 11KHz 8 bit unsigned `.wav` files! Due to memory limitations of the Raspberry Pi Pico the size of each sound file must also be less than 192kb. Files bigger than this will play, but will be cut off._
 
 Here's an example of a BooBox I made looking like the fiendlishly funny _Murray the Demonic Talking Skull_ from the Monkey Island games:
 
