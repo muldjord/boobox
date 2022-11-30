@@ -5,9 +5,9 @@ Whenever the motion detector triggers The Pico fetches a sound from the provided
 
 DISCLAIMER! I plan on making a much more thorough explanation on how to built your own BooBox when I get the time. For now, what follows is a quick and dirty walkthrough that should provide all necessary information although in a pretty basic and non-visual way.
 
-NOTE! All sounds added to the BooBox server `data` folder MUST be 11KHz 8 bit unsigned! Due to memory limitations of the Raspberry Pi Pico the duration of the sounds must also be less than about 5 seconds (thereabout).
+_NOTE! All sounds added to the BooBox server `data` folder MUST be 11KHz 8 bit unsigned! Due to memory limitations of the Raspberry Pi Pico the duration of the sounds must also be less than 192kb. Files bigger than this will play, but will be cut off._
 
-Here's an example of a BooBox I made looking like the fiendlishly funny "Murray the Demonic Talking Skull" from the Monkey Island games:
+Here's an example of a BooBox I made looking like the fiendlishly funny _Murray the Demonic Talking Skull_ from the Monkey Island games:
 
 [![](https://img.youtube.com/vi/NpiYJFMU0TQ/0.jpg)](https://www.youtube.com/watch?v=NpiYJFMU0TQ)
 
@@ -21,6 +21,7 @@ Here's an example of a BooBox I made looking like the fiendlishly funny "Murray 
 * MAX98357A class C I2S amplifier module
 
 #### Electronic schematics
+Connect everything exactly as seen here. You'll notice that VSYS and GND has many connections. For the VSYS (+5v) you'll need to share one pin from the Pico W. For the GND connections there are several GND spread out over the GPIO pins of the Pico W. You can use any of those except the one marked _AGND_.
 ![Connection schematic](schematics/connections_schematic.png)
 
 ### Software
