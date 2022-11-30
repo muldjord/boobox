@@ -45,7 +45,7 @@ Put your wav files in the `data` directory. Format MUST be mono 11KHz 8 bit unsi
 $ ./BooBox
 ```
 ### Pico client
-* Compile the pico_murray client
+* Compile the pico_boobox client
 ```
 $ cd client
 $ mkdir build
