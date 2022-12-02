@@ -22,6 +22,7 @@ Here's an example of a BooBox I made looking like the fiendlishly funny _Murray 
 
 #### Electronic schematics
 Connect everything exactly as seen here. You'll notice that VSYS and GND has many connections. For the VSYS (+5v) you'll need to share one pin from the Pico W. For the GND connections there are several GND spread out over the GPIO pins of the Pico W. You can use any of those except the one marked _AGND_.
+
 ![Connection schematic](schematics/connections_schematic.png)
 
 ### Software
